@@ -1,0 +1,40 @@
+---
+# LaTeX Poster Build and Release Workflow
+# Automatically builds LaTeX poster documents into PDFs and creates releases
+name: Build and Release PDF
+
+on:
+  # Trigger on pull requests for PDF preview generation
+  pull_request_target:
+  # Trigger on tags for release creation
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write  # Required for creating releases and uploading artifacts
+
+jobs:
+  build-and-release-pdf:
+    name: Build LaTeX Poster and Create Release
+    runs-on: ubuntu-latest
+    # Use the latest TeXLive Japanese environment with textlint support
+    container: ghcr.io/smkwlab/texlive-ja-textlint:2025d
+
+    steps:
+      # Build LaTeX documents using the latex-release-action
+      - name: Build and Release LaTeX Poster
+        uses: smkwlab/latex-release-action@v2.2.0
+        with:
+          # Specify the poster file to build
+          files: a0poster
+
+          # Upload PDFs as artifacts for pull requests (enables preview)
+          upload_on_pr: true
+
+          # latexmk will use .latexmkrc configuration for lualatex
+          # No additional options needed - respects lualatex workflow
+          # latex_options: (not specified to use .latexmkrc defaults)
+
+          # Clean up intermediate files after build
+          cleanup: true

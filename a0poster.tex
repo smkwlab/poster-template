@@ -1,0 +1,45 @@
+\documentclass[25pt, a0paper, portrait]{tikzposter}
+\usepackage{luatexja}
+\usepackage{luatexja-fontspec}
+
+\usetheme{Simple}
+%\usetheme{Minimal}
+%\usetheme{Basic}
+
+%\useblockstyle{Minimal}
+%\useblockstyle{Basic}
+\useblockstyle{Slide}
+%\useblockstyle{Default}
+
+\title{ポスタータイトル}
+\author{著者名}
+\institute{所属機関}
+
+\begin{document}
+
+\maketitle
+
+\begin{columns}
+    \column{0.5} % 左カラム（幅50%）
+    
+    \block{セクション1}{
+        ここに内容を記述します。
+    }
+    
+    \block{セクション2}{
+        さらに内容を追加できます。
+    }
+    
+    \column{0.5} % 右カラム（幅50%）
+    
+    \block{セクション3}{
+        右側のカラムの内容です。
+    }
+    
+    \block{セクション4}{
+        追加の内容。
+    }
+    
+\end{columns}
+
+\end{document}
