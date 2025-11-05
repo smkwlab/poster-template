@@ -25,12 +25,12 @@
 
 #### 下川研学生向け
 ```bash
-DOC_TYPE=poster /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)" bash poster
 ```
 
 #### それ以外の皆さん向け
 ```bash
-INDIVIDUAL_MODE=true DOC_TYPE=poster /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
+INDIVIDUAL_MODE=true /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)" bash poster
 ```
 
 **自動セットアップの特徴**:
