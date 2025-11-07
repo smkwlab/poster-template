@@ -18,19 +18,16 @@ jobs:
   build-and-release-pdf:
     name: Build LaTeX Poster and Create Release
     runs-on: ubuntu-latest
-    # Use the latest TeXLive Japanese environment with textlint support
-    container: ghcr.io/smkwlab/texlive-ja-textlint:2025g
 
     steps:
-      # Build LaTeX documents using the latex-release-action
+      - uses: actions/checkout@v4
       - name: Build and Release LaTeX Poster
-        uses: smkwlab/latex-release-action@v2.5.0
+        uses: smkwlab/latex-release-action@v3.0.4
+        env:
+          GH_TOKEN: ${{ github.token }}
         with:
           # Specify the poster file to build
           files: a0poster
-
-          # Upload PDFs as artifacts for pull requests (enables preview)
-          upload_on_pr: true
 
           # latexmk will use .latexmkrc configuration for lualatex
           # No additional options needed - respects lualatex workflow
