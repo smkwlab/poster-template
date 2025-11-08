@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build and Release LaTeX Poster
-        uses: smkwlab/latex-release-action@v3.0.4
+        uses: smkwlab/latex-release-action@v3.1.0
         env:
           GH_TOKEN: ${{ github.token }}
         with:
