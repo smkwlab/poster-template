@@ -1,0 +1,36 @@
+name: Notify Lab ML on PR
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  notify-ml:
+    # draft PRの場合、またはOrganization Secretsが未設定の場合はスキップ
+    if: ${{ !github.event.pull_request.draft && secrets.SMTP_SERVER }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send notification email to lab ML
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "[PR] ${{ github.event.repository.name }}: ${{ github.event.pull_request.title }}"
+          to: ${{ secrets.LAB_ML_ADDRESS }}
+          from: ${{ secrets.SMTP_FROM }}
+          content_type: text/plain
+          body: |
+            新しいPull Requestが作成されました
+
+            リポジトリ: ${{ github.event.repository.name }}
+            作成者: ${{ github.event.pull_request.user.login }}
+            タイトル: ${{ github.event.pull_request.title }}
+            ブランチ: ${{ github.event.pull_request.head.ref }} → ${{ github.event.pull_request.base.ref }}
+
+            PR URL: ${{ github.event.pull_request.html_url }}
+
+            ---
+            このメールはGitHub Actionsから自動送信されています
