@@ -27,7 +27,7 @@ jobs:
           echo "For users outside the organization: you can safely delete this workflow file if not needed"
 
       - name: Send notification email to lab ML
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@4226df7daafa6fc901a43789c49bf7ab309066e7  # v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
           server_port: ${{ secrets.SMTP_PORT }}
