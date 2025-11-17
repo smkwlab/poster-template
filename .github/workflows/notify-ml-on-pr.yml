@@ -6,11 +6,26 @@ on:
 
 jobs:
   notify-ml:
-    # draft PRの場合、またはOrganization Secretsが未設定の場合はスキップ
-    if: ${{ !github.event.pull_request.draft && secrets.SMTP_SERVER }}
+    # draft PRの場合はスキップ
+    #
+    # このワークフローは Organization Secrets を使用します。
+    # 以下のSecretsが未設定の場合、メール送信ステップで失敗します：
+    #   - SMTP_SERVER, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD
+    #   - LAB_ML_ADDRESS, SMTP_FROM
+    #
+    # 組織外のユーザー: このワークフローが不要な場合は削除してください
+    # 失敗を許容したくない場合は、ワークフローファイル全体を削除することを推奨します
+    if: ${{ !github.event.pull_request.draft }}
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check requirements
+        run: |
+          echo "::notice::ML notification workflow requires Organization Secrets"
+          echo "Required secrets: SMTP_SERVER, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD, LAB_ML_ADDRESS, SMTP_FROM"
+          echo "If this workflow fails due to missing secrets, please check your organization settings"
+          echo "For users outside the organization: you can safely delete this workflow file if not needed"
+
       - name: Send notification email to lab ML
         uses: dawidd6/action-send-mail@v3
         with:
