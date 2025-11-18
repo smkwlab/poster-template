@@ -39,7 +39,7 @@ jobs:
           FILES=$(gh pr view ${{ github.event.pull_request.number }} \
             --repo ${{ github.repository }} \
             --json files \
-            --jq '.files[] | "    \(.path) (+\(.additions)/-\(.deletions))"' | head -20)
+            --jq '.files[] | "  * \(.path) (+\(.additions)/-\(.deletions))"' | head -20)
 
           # 複数行を環境変数に設定
           {
@@ -71,6 +71,7 @@ jobs:
             タイトル: ${{ github.event.pull_request.title }}
             ブランチ: ${{ github.event.pull_request.head.ref }} → ${{ github.event.pull_request.base.ref }}
 
+            説明:
             ${{ github.event.pull_request.body || '(No description provided)' }}
 
             You can view, comment on, or merge this pull request online at:
