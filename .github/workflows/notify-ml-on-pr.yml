@@ -26,6 +26,33 @@ jobs:
           echo "If this workflow fails due to missing secrets, please check your organization settings"
           echo "For users outside the organization: you can safely delete this workflow file if not needed"
 
+      - name: Get PR details
+        id: pr_details
+        run: |
+          # コミット一覧を取得（最大10件）
+          COMMITS=$(gh pr view ${{ github.event.pull_request.number }} \
+            --repo ${{ github.repository }} \
+            --json commits \
+            --jq '.commits[] | "  * \(.messageHeadline)"' | head -10)
+
+          # ファイル変更一覧を取得（最大20件）
+          FILES=$(gh pr view ${{ github.event.pull_request.number }} \
+            --repo ${{ github.repository }} \
+            --json files \
+            --jq '.files[] | "  * \(.path) (+\(.additions)/-\(.deletions))"' | head -20)
+
+          # 複数行を環境変数に設定
+          {
+            echo "COMMITS<<EOF"
+            echo "$COMMITS"
+            echo "EOF"
+            echo "FILES<<EOF"
+            echo "$FILES"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ github.token }}
+
       - name: Send notification email to lab ML
         uses: dawidd6/action-send-mail@4226df7daafa6fc901a43789c49bf7ab309066e7  # v3
         with:
@@ -36,7 +63,6 @@ jobs:
           subject: "[PR] ${{ github.event.repository.name }}: ${{ github.event.pull_request.title }}"
           to: ${{ secrets.LAB_ML_ADDRESS }}
           from: ${{ secrets.SMTP_FROM }}
-          content_type: text/plain
           body: |
             新しいPull Requestが作成されました
 
@@ -45,7 +71,25 @@ jobs:
             タイトル: ${{ github.event.pull_request.title }}
             ブランチ: ${{ github.event.pull_request.head.ref }} → ${{ github.event.pull_request.base.ref }}
 
-            PR URL: ${{ github.event.pull_request.html_url }}
+            説明:
+            ${{ github.event.pull_request.body || '(No description provided)' }}
+
+            You can view, comment on, or merge this pull request online at:
+
+              ${{ github.event.pull_request.html_url }}
+
+            -- Commit Summary --
+
+            ${{ steps.pr_details.outputs.COMMITS || '  (No commits available)' }}
+
+            -- File Changes --
+
+            ${{ steps.pr_details.outputs.FILES || '  (No files available)' }}
+
+            -- Patch Links --
+
+            ${{ github.event.pull_request.patch_url }}
+            ${{ github.event.pull_request.diff_url }}
 
             ---
             このメールはGitHub Actionsから自動送信されています
