@@ -71,7 +71,7 @@ jobs:
             タイトル: ${{ github.event.pull_request.title }}
             ブランチ: ${{ github.event.pull_request.head.ref }} → ${{ github.event.pull_request.base.ref }}
 
-            ${{ github.event.pull_request.body }}
+            ${{ github.event.pull_request.body || '(No description provided)' }}
 
             You can view, comment on, or merge this pull request online at:
 
@@ -79,11 +79,11 @@ jobs:
 
             -- Commit Summary --
 
-            ${{ steps.pr_details.outputs.COMMITS }}
+            ${{ steps.pr_details.outputs.COMMITS || '  (No commits available)' }}
 
             -- File Changes --
 
-            ${{ steps.pr_details.outputs.FILES }}
+            ${{ steps.pr_details.outputs.FILES || '  (No files available)' }}
 
             -- Patch Links --
 
