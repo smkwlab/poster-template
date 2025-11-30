@@ -1,37 +1,14 @@
 ---
-# LaTeX Poster Build and Release Workflow
-# Automatically builds LaTeX poster documents into PDFs and creates releases
 name: Build and Release PDF
 
 on:
-  # Trigger on pull requests for PDF preview generation
   pull_request_target:
-  # Trigger on tags for release creation
   push:
     tags:
       - '*'
 
-permissions:
-  contents: write  # Required for creating releases and uploading artifacts
-
 jobs:
-  build-and-release-pdf:
-    name: Build LaTeX Poster and Create Release
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v5
-      - name: Build and Release LaTeX Poster
-        uses: smkwlab/latex-release-action@v3.1.0
-        env:
-          GH_TOKEN: ${{ github.token }}
-        with:
-          # Specify the poster file to build
-          files: a0poster
-
-          # latexmk will use .latexmkrc configuration for lualatex
-          # No additional options needed - respects lualatex workflow
-          # latex_options: (not specified to use .latexmkrc defaults)
-
-          # Clean up intermediate files after build
-          cleanup: true
+  build:
+    uses: smkwlab/.github/.github/workflows/latex-build.yml@main
+    with:
+      files: "a0poster"
