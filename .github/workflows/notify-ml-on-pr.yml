@@ -1,3 +1,4 @@
+---
 name: Notify Lab ML on PR
 
 on:
@@ -5,91 +6,6 @@ on:
     types: [opened, ready_for_review]
 
 jobs:
-  notify-ml:
-    # draft PRの場合はスキップ
-    #
-    # このワークフローは Organization Secrets を使用します。
-    # 以下のSecretsが未設定の場合、メール送信ステップで失敗します：
-    #   - SMTP_SERVER, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD
-    #   - LAB_ML_ADDRESS, SMTP_FROM
-    #
-    # 組織外のユーザー: このワークフローが不要な場合は削除してください
-    # 失敗を許容したくない場合は、ワークフローファイル全体を削除することを推奨します
-    if: ${{ !github.event.pull_request.draft }}
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check requirements
-        run: |
-          echo "::notice::ML notification workflow requires Organization Secrets"
-          echo "Required secrets: SMTP_SERVER, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD, LAB_ML_ADDRESS, SMTP_FROM"
-          echo "If this workflow fails due to missing secrets, please check your organization settings"
-          echo "For users outside the organization: you can safely delete this workflow file if not needed"
-
-      - name: Get PR details
-        id: pr_details
-        run: |
-          # コミット一覧を取得（最大10件）
-          COMMITS=$(gh pr view ${{ github.event.pull_request.number }} \
-            --repo ${{ github.repository }} \
-            --json commits \
-            --jq '.commits[] | "  * \(.messageHeadline)"' | head -10)
-
-          # ファイル変更一覧を取得（最大20件）
-          FILES=$(gh pr view ${{ github.event.pull_request.number }} \
-            --repo ${{ github.repository }} \
-            --json files \
-            --jq '.files[] | "  * \(.path) (+\(.additions)/-\(.deletions))"' | head -20)
-
-          # 複数行を環境変数に設定
-          {
-            echo "COMMITS<<EOF"
-            echo "$COMMITS"
-            echo "EOF"
-            echo "FILES<<EOF"
-            echo "$FILES"
-            echo "EOF"
-          } >> $GITHUB_OUTPUT
-        env:
-          GH_TOKEN: ${{ github.token }}
-
-      - name: Send notification email to lab ML
-        uses: dawidd6/action-send-mail@4226df7daafa6fc901a43789c49bf7ab309066e7  # v3
-        with:
-          server_address: ${{ secrets.SMTP_SERVER }}
-          server_port: ${{ secrets.SMTP_PORT }}
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
-          subject: "[PR] ${{ github.event.repository.name }}: ${{ github.event.pull_request.title }}"
-          to: ${{ secrets.LAB_ML_ADDRESS }}
-          from: ${{ secrets.SMTP_FROM }}
-          body: |
-            新しいPull Requestが作成されました
-
-            リポジトリ: ${{ github.event.repository.name }}
-            作成者: ${{ github.event.pull_request.user.login }}
-            タイトル: ${{ github.event.pull_request.title }}
-            ブランチ: ${{ github.event.pull_request.head.ref }} → ${{ github.event.pull_request.base.ref }}
-
-            説明:
-            ${{ github.event.pull_request.body || '(No description provided)' }}
-
-            You can view, comment on, or merge this pull request online at:
-
-              ${{ github.event.pull_request.html_url }}
-
-            -- Commit Summary --
-
-            ${{ steps.pr_details.outputs.COMMITS || '  (No commits available)' }}
-
-            -- File Changes --
-
-            ${{ steps.pr_details.outputs.FILES || '  (No files available)' }}
-
-            -- Patch Links --
-
-            ${{ github.event.pull_request.patch_url }}
-            ${{ github.event.pull_request.diff_url }}
-
-            ---
-            このメールはGitHub Actionsから自動送信されています
+  notify:
+    uses: smkwlab/.github/.github/workflows/notify-ml-on-pr.yml@main
+    secrets: inherit
