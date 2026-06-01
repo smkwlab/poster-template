@@ -1,2 +1,2 @@
-$latex = 'lualatex -halt-on-error -interaction=nonstopmode';
-$pdf_mode = 3;
+$lualatex = 'lualatex -synctex=1 -halt-on-error -file-line-error -interaction=nonstopmode';
+$pdf_mode = 4;
