@@ -1,0 +1,29 @@
+# Caller template: AI Paper Review (one-shot, summary comment) — calls the ai-review reusable.
+# Distributed by scripts/distribute-workflow.sh as
+# .github/workflows/ai-paper-review.yml in each target repository.
+# The ref / model / language tokens below are substituted at distribution time.
+name: AI Paper Review
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]   # no synchronize: avoid re-reviewing every push
+
+concurrency:
+  group: ai-paper-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    uses: smkwlab/.github/.github/workflows/ai-review.yml@v1
+    permissions:
+      contents: read
+      pull-requests: write
+    secrets:
+      anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+      gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
+    with:
+      model_code: claude-sonnet-4-6
+      review_mode: ACADEMIC
+      single_comment: true
+      language: Japanese
+      exclude_paths: "*.bib,*.sty,*.cls"
