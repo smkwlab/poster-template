@@ -6,7 +6,7 @@ name: AI Paper Review
 
 on:
   pull_request:
-    types: [opened, reopened, ready_for_review]   # no synchronize: avoid re-reviewing every push
+    types: [opened, reopened, ready_for_review, synchronize]   # synchronize: re-review on each push. Drop if cost is a concern.
 
 concurrency:
   group: ai-paper-review-${{ github.event.pull_request.number }}
