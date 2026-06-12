@@ -1,0 +1,37 @@
+# Caller template: Claude QA (one-shot @claude answerer, advice-only).
+# Distributed by scripts/distribute-workflow.sh as
+# .github/workflows/claude-qa.yml in each target repository.
+# The ref / model / language tokens below are substituted at distribution time.
+#
+# Replaces the claude-code-action based claude-mention caller: @claude answers
+# with a single Messages API call over assembled context (diff, full text of
+# the changed .tex files, conversation). No checkout, no agent, no OIDC — it
+# structurally cannot edit or commit. See smkwlab/.github#50.
+name: Claude QA
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  issues:
+    types: [opened]
+
+jobs:
+  claude-qa:
+    # Run only when @claude is mentioned AND the author has repository access
+    # (OWNER/MEMBER/COLLABORATOR), so external users cannot trigger a run.
+    if: >
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude') && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude') && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)) ||
+      (github.event_name == 'issues' && contains(github.event.issue.body, '@claude') && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association))
+    uses: smkwlab/.github/.github/workflows/claude-qa.yml@v1
+    permissions:
+      contents: read         # advice-only: no checkout, no commits
+      pull-requests: write
+      issues: write
+    secrets:
+      anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+    with:
+      model: claude-sonnet-4-6
+      language: 日本語
