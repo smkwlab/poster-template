@@ -35,7 +35,7 @@ Note: This template requires LuaLaTeX with Japanese font support (LuaTeX-ja).
 ## Key Architecture
 
 - **a0poster.tex**: The primary LaTeX source file using `tikzposter` document class
-- **GitHub Actions**: Automated build and release workflow using `ghcr.io/smkwlab/texlive-ja-textlint:2025d` Docker container via `smkwlab/latex-release-action@v2.2.0`
+- **GitHub Actions**: Automated build and release via the shared `smkwlab/.github` LaTeX build workflow (`latex-build.yml@v1`), which centrally pins the `texlive-ja-textlint` Docker image and `latex-release-action` version for the whole ecosystem
 - **Output**: Generates `a0poster.pdf` (which is gitignored)
 
 ## Release Workflow
