@@ -2,13 +2,13 @@
 name: Build and Release PDF
 
 on:
-  pull_request_target:
+  pull_request:
   push:
     tags:
       - '*'
 
 jobs:
   build:
-    uses: smkwlab/.github/.github/workflows/latex-build.yml@main
+    uses: smkwlab/.github/.github/workflows/latex-build.yml@v1
     with:
       files: "a0poster"
