@@ -27,7 +27,7 @@
 1. **Docker Desktop** - LaTeX 環境の実行に必要
 2. **GitHub Desktop** - リポジトリ管理・同期に必要
 3. **GitHub CLI (gh)** - リポジトリ作成スクリプトの実行に必要
-   - [インストール方法](https://github.com/smkwlab/thesis-management-tools/blob/main/docs/INSTALL-GH.md)
+   - [インストール方法](https://github.com/smkwlab/student-repo-management/blob/main/docs/INSTALL-GH.md)
 
 ### 準備
 
@@ -37,15 +37,15 @@ GitHub CLI の認証を完了してください：
 gh auth login
 ```
 
-**注意:** `gh` コマンドが見つからない場合は [インストール方法](https://github.com/smkwlab/thesis-management-tools/blob/main/docs/INSTALL-GH.md) を参照してください。
+**注意:** `gh` コマンドが見つからない場合は [インストール方法](https://github.com/smkwlab/student-repo-management/blob/main/docs/INSTALL-GH.md) を参照してください。
 
 ### 自動セットアップ（推奨）
 
-[thesis-management-tools](https://github.com/smkwlab/thesis-management-tools)の自動セットアップスクリプトを使用：
+[student-repo-management](https://github.com/smkwlab/student-repo-management)の自動セットアップスクリプトを使用：
 
 #### 下川研学生向け
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/v1/create-repo/setup.sh)" bash poster
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/student-repo-management/v1/create-repo/setup.sh)" bash poster
 ```
 
 > 💡 `v1` は安定版（最新の v1 系）を指す移動タグです。最新の開発版を試す場合は URL の `v1` を `main` に置き換えてください。
@@ -57,7 +57,7 @@ gh auth login
 
 #### それ以外の皆さん向け
 ```bash
-INDIVIDUAL_MODE=true /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/v1/create-repo/setup.sh)" bash poster
+INDIVIDUAL_MODE=true /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/student-repo-management/v1/create-repo/setup.sh)" bash poster
 ```
 
 **実行手順:**
