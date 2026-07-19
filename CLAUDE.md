@@ -38,6 +38,19 @@ Note: This template requires LuaLaTeX with Japanese font support (LuaTeX-ja).
 - **GitHub Actions**: Automated build and release via the shared `smkwlab/.github` LaTeX build workflow (`latex-build.yml@v1`), which centrally pins the `texlive-ja-textlint` Docker image and `latex-release-action` version for the whole ecosystem
 - **Output**: Generates `a0poster.pdf` (which is gitignored)
 
+## Review Workflow (draft PR cycle)
+
+Student repositories created from this template use the same Pull Request-based
+review workflow as sotsuron-template / ise-report-template:
+
+- Repositories are initialized with `main` + `0th-draft` branches
+- Students write in a draft branch and open a PR to `main` for review
+- **create-next-draft.yml**: automatically creates the next draft branch (`1st-draft`, `2nd-draft`, ...) when a draft PR is opened
+- **prevent-draft-merge.yml**: blocks accidental merges of draft PRs (draft PRs are closed, not merged)
+- **sync-next-draft.yml**: propagates suggestion commits on a reviewed draft branch to later draft branches
+
+All three are thin callers of the reusable workflows in `smkwlab/.github`.
+
 ## Release Workflow
 
 The repository automatically builds and releases PDFs when:

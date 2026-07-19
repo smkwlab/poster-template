@@ -8,6 +8,7 @@
 - **tikzposterベース**: 柔軟なブロックレイアウトシステム
 - **日本語完全対応**: LuaLaTeX + luatexjaで最適化
 - **自動PDF生成**: プルリクエスト時にPDFプレビューを自動作成
+- **PRベース添削**: draft PR サイクルによる段階的なレビュー・改稿
 - **カスタマイズ可能**: 複数のテーマとブロックスタイルから選択
 - **縦向き・横向き**: レイアウト変更が容易
 
@@ -71,14 +72,28 @@ INDIVIDUAL_MODE=true bash <(curl -fsSL https://repo-setup.smkwlab.net) poster
 
 ### ポスター作成と編集
 
-### 1. ポスター編集
-`a0poster.tex` を編集してポスターを作成：
-- **タイトル設定**: `\title{}`, `\author{}`, `\institute{}`
-- **ブロック追加**: `\block{タイトル}{内容}`でセクション作成
-- **レイアウト**: `\begin{columns}` でカラムレイアウト
+### 1. ポスター編集（draft PR サイクル）
+
+自動セットアップ後のリポジトリには `main` に加えて `0th-draft` ブランチが作成済みです。
+以下のサイクルで執筆・添削を進めます：
+
+1. **`0th-draft` ブランチで編集**: `a0poster.tex` を編集してポスターを作成
+   - **タイトル設定**: `\title{}`, `\author{}`, `\institute{}`
+   - **ブロック追加**: `\block{タイトル}{内容}`でセクション作成
+   - **レイアウト**: `\begin{columns}` でカラムレイアウト
+2. **Pull Request 作成**: `0th-draft` → `main` の PR を作成して添削を依頼
+   - PR 作成と同時に次稿用の `1st-draft` ブランチが自動作成される
+3. **レビュー対応**: PR 上のコメント・指摘事項を確認
+4. **次稿で改稿**: `1st-draft` に切り替えて修正を続け、再び PR を作成
+   - 以降 `2nd-draft`, `3rd-draft`... と必要なだけ繰り返す
+
+> **重要**: draft ブランチの PR は **マージせずクローズ** します（誤マージは自動でブロックされます）。
+> draft PR サイクルの共通ルールの全体像は
+> [STUDENT-WORKFLOW.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md)
+> にまとまっています。
 
 ### 2. PDF生成
-- **自動生成**: プッシュ時に自動でPDFが生成
+- **自動生成**: PR 作成・更新時に自動でPDFが生成
 - **確認方法**: GitHub Actionsタブで状況確認
 - **ダウンロード**: Artifactsから生成PDFを取得
 
