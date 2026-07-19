@@ -1,0 +1,10 @@
+---
+name: Create Next Draft Branch
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  create-next:
+    uses: smkwlab/.github/.github/workflows/create-next-draft.yml@v1

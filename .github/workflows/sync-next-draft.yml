@@ -1,0 +1,14 @@
+name: Sync Suggestions to Next Draft
+
+on:
+  push:
+    branches:
+      - '*-draft'
+      - 'abstract-*'
+
+jobs:
+  sync:
+    permissions:
+      contents: write        # 次稿ブランチへの merge push に必要
+      pull-requests: write   # コンフリクト時の同期 PR 作成に必要
+    uses: smkwlab/.github/.github/workflows/sync-next-draft.yml@v1
