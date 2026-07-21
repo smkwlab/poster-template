@@ -1,12 +1,18 @@
----
+# Caller template: Prevent Draft Merge — calls the prevent-draft-merge
+# reusable. Part of the draft PR cycle; dormant in repositories without
+# draft-named branches (the reusable checks the head branch pattern).
+# Distributed by scripts/distribute-workflow.sh as
+# .github/workflows/prevent-draft-merge.yml in each target repository.
 name: Prevent Draft Merge
 
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    # All draft PRs should be protected, not just PRs to main/review-branch
-    # The reusable workflow checks if the head branch is a draft pattern
+    # All draft PRs should be protected, not just PRs to main.
+    # The reusable workflow checks if the head branch is a draft pattern.
 
 jobs:
   prevent-merge:
     uses: smkwlab/.github/.github/workflows/prevent-draft-merge.yml@v1
+    permissions:
+      contents: read
