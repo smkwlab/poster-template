@@ -1,4 +1,8 @@
----
+# Caller template: Notify Lab ML on PR — calls the notify-ml-on-pr reusable.
+# Distributed by scripts/distribute-workflow.sh as
+# .github/workflows/notify-ml-on-pr.yml in each target repository.
+# secrets: inherit passes the notification secrets the reusable reads; see
+# notify-ml-on-pr.pr-note.md for what must exist at org level.
 name: Notify Lab ML on PR
 
 on:
@@ -8,4 +12,7 @@ on:
 jobs:
   notify:
     uses: smkwlab/.github/.github/workflows/notify-ml-on-pr.yml@v1
+    permissions:
+      contents: read
+      pull-requests: read
     secrets: inherit
