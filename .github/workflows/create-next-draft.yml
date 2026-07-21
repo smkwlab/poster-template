@@ -1,4 +1,8 @@
----
+# Caller template: Create Next Draft Branch — calls the create-next-draft
+# reusable. Part of the draft PR cycle; dormant in repositories without
+# draft-named branches (the reusable guards on the head branch name).
+# Distributed by scripts/distribute-workflow.sh as
+# .github/workflows/create-next-draft.yml in each target repository.
 name: Create Next Draft Branch
 
 on:
@@ -8,3 +12,6 @@ on:
 jobs:
   create-next:
     uses: smkwlab/.github/.github/workflows/create-next-draft.yml@v1
+    permissions:
+      contents: write
+      pull-requests: write
