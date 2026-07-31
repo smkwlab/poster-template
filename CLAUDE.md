@@ -44,7 +44,8 @@ Student repositories created from this template use the same Pull Request-based
 review workflow as sotsuron-template / ise-report-template:
 
 - Repositories are initialized with `main` + `0th-draft` branches
-- Students write in a draft branch and open a PR to `main` for review
+- Students write in a draft branch and open a PR whose base is the previous draft branch
+  (`main` for `0th-draft`, the only draft with no predecessor)
 - **create-next-draft.yml**: automatically creates the next draft branch (`1st-draft`, `2nd-draft`, ...) when a draft PR is opened
 - **prevent-draft-merge.yml**: blocks accidental merges of draft PRs (draft PRs are closed, not merged)
 - **sync-next-draft.yml**: propagates suggestion commits on a reviewed draft branch to later draft branches

@@ -81,10 +81,11 @@ INDIVIDUAL_MODE=true bash <(curl -fsSL https://repo-setup.smkwlab.net) poster
    - **タイトル設定**: `\title{}`, `\author{}`, `\institute{}`
    - **ブロック追加**: `\block{タイトル}{内容}`でセクション作成
    - **レイアウト**: `\begin{columns}` でカラムレイアウト
-2. **Pull Request 作成**: `0th-draft` → `main` の PR を作成して添削を依頼
-   - PR 作成と同時に次稿用の `1st-draft` ブランチが自動作成される
+2. **Pull Request 作成**: `base: main` ← `compare: 0th-draft` の PR を作成して添削を依頼
+   - PR 作成と同時に次稿ブランチ（`0th-draft` の次は `1st-draft`）が自動作成される
 3. **レビュー対応**: PR 上のコメント・指摘事項を確認
-4. **次稿で改稿**: `1st-draft` に切り替えて修正を続け、再び PR を作成
+4. **次稿で改稿**: 自動作成された次稿ブランチに切り替えて改稿し、再び PR を作成
+   - **PR の base（マージ先）は前稿ブランチ**にする（例: `base: 0th-draft` ← `compare: 1st-draft`）。前の稿がない最初の `0th-draft` の PR だけ `base: main`
    - 以降 `2nd-draft`, `3rd-draft`... と必要なだけ繰り返す
 
 > **重要**: draft ブランチの PR は **マージせずクローズ** します（誤マージは自動でブロックされます）。
