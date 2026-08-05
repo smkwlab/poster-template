@@ -90,7 +90,9 @@ INDIVIDUAL_MODE=true bash <(curl -fsSL https://repo-setup.smkwlab.net) poster
 
 > **重要**: draft ブランチの PR は **マージせずクローズ** します（誤マージは自動でブロックされます）。
 > draft PR サイクルの共通ルールの全体像は
-> [STUDENT-WORKFLOW.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md)
+> [STUDENT-WORKFLOW.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md)、
+> クローン・ブランチ切り替え・PR 作成などの操作手順は
+> [GITHUB-DESKTOP-GUIDE.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/GITHUB-DESKTOP-GUIDE.md)
 > にまとまっています。
 
 ### 2. PDF生成
