@@ -23,5 +23,6 @@
 ## このリポジトリの使い方
 
 - **執筆の流れ・レビューの受け方**: [STUDENT-WORKFLOW ガイド](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md)
+- **GitHub Desktop の操作手順・トラブルシューティング**: [GITHUB-DESKTOP-GUIDE](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/GITHUB-DESKTOP-GUIDE.md)
 - **ポスターの作り方・作業手順**: [テンプレートの README](https://github.com/smkwlab/poster-template/blob/main/.github/README.md)
 - **質問・トラブル**: smkwlabML または担当教員まで

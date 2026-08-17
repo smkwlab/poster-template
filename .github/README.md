@@ -1,6 +1,7 @@
 # Academic Poster Template
 
-九州産業大学理工学部下川研用の学会発表ポスターテンプレートです。A0サイズの学会ポスター作成に最適化されたテンプレートで、tikzposterを使用した美しいレイアウトを提供します。
+九州産業大学理工学部下川研用の学会発表ポスターテンプレートです。
+A0サイズの学会ポスター作成に最適化されたテンプレートで、tikzposterを使用した美しいレイアウトを提供します。
 
 ## 🚀 主な機能
 
@@ -85,13 +86,12 @@ INDIVIDUAL_MODE=true bash <(curl -fsSL https://repo-setup.smkwlab.net) poster
    - PR 作成と同時に次稿ブランチ（`0th-draft` の次は `1st-draft`）が自動作成される
 3. **レビュー対応**: PR 上のコメント・指摘事項を確認
 4. **次稿で改稿**: 自動作成された次稿ブランチに切り替えて改稿し、再び PR を作成
-   - **PR の base（マージ先）は前稿ブランチ**にする（例: `base: 0th-draft` ← `compare: 1st-draft`）。前の稿がない最初の `0th-draft` の PR だけ `base: main`
+   - **PR の base（マージ先）は前稿ブランチ**にする（例: `base: 0th-draft` ← `compare: 1st-draft`）。
+     前の稿がない最初の `0th-draft` の PR だけ `base: main`
    - 以降 `2nd-draft`, `3rd-draft`... と必要なだけ繰り返す
 
 > **重要**: draft ブランチの PR は **マージせずクローズ** します（誤マージは自動でブロックされます）。
-> draft PR サイクルの共通ルールの全体像は
-> [STUDENT-WORKFLOW.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md)
-> にまとまっています。
+> draft PR サイクルの共通ルールの全体像は [STUDENT-WORKFLOW.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md)、クローン・ブランチ切り替え・PR 作成などの操作手順は [GITHUB-DESKTOP-GUIDE.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/GITHUB-DESKTOP-GUIDE.md) にまとまっています。
 
 ### 2. PDF生成
 - **自動生成**: PR 作成・更新時に自動でPDFが生成
@@ -253,8 +253,7 @@ latexmk a0poster.tex
 ### PDF生成とワークフロー
 
 #### ローカルでのビルド
-VS Code でファイル保存時に下記の latexmk が実行される
-開発環境での確認用：
+VS Code でファイル保存時に下記の latexmk が実行される 開発環境での確認用：
 
 ```bash
 # latexmk使用（推奨）
