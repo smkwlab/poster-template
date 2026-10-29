@@ -109,8 +109,9 @@ The two files therefore surface in exactly one place each:
 
 - **[.github/README.md](.github/README.md)** - Template documentation (setup, writing
   procedure). Shown on this repository's front page; deleted in student repositories.
-- **[README.md](README.md)** - Author-information template (name, student ID, title)
-  filled in by the student. Shown on the student repository's front page.
+- **[README.md](README.md)** - Author-information template (name, student ID,
+  affiliation, year) filled in automatically when the repository is created.
+  Shown on the student repository's front page.
 
 Links out of `.github/README.md` may be relative because it only ever renders here.
 Files that survive into student repositories must reference it by absolute URL.
